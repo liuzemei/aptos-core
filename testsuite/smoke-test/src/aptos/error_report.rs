@@ -7,7 +7,7 @@ use aptos_types::{
 };
 use cached_packages::aptos_stdlib;
 use forge::{AptosPublicInfo, Swarm};
-use rand::rngs::{OsRng, StdRng};
+use rand::rngs::StdRng;
 use rand::{Rng, SeedableRng};
 
 use crate::smoke_test_environment::new_local_swarm_with_aptos;
@@ -37,7 +37,7 @@ async fn submit_and_check_err<F: Fn(TransactionBuilder) -> TransactionBuilder>(
 
 #[tokio::test]
 async fn test_error_report() {
-    let mut rng = StdRng::from_seed(OsRng.gen());
+    let mut rng = StdRng::from_entropy();
     if rng.gen_bool(0.5) {
         panic!("Inject failure")
     }
